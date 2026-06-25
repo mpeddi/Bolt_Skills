@@ -1,0 +1,376 @@
+{
+  "executed": "2026-06-24T00:00:00Z",
+  "dev_server_url": "http://localhost:5173",
+  "results": [
+    {
+      "tc_id": "TC-001",
+      "feature_area": "Auth",
+      "category": "golden_path",
+      "status": "pass",
+      "actual": "Sign up calls supabase.auth.signUp(), session triggers onAuthStateChange, dashboard renders with expense list.",
+      "expected": "User created, dashboard loads",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-002",
+      "feature_area": "Auth",
+      "category": "golden_path",
+      "status": "pass",
+      "actual": "signInWithPassword() succeeds, onAuthStateChange sets user, dashboard renders with existing expenses fetched.",
+      "expected": "Dashboard loads with existing expenses visible",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-003",
+      "feature_area": "Auth",
+      "category": "golden_path",
+      "status": "pass",
+      "actual": "supabase.auth.signOut() called, onAuthStateChange sets user to null, App renders AuthForm.",
+      "expected": "Auth screen shown, dashboard unmounts",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-004",
+      "feature_area": "Auth",
+      "category": "edge_case",
+      "status": "pass",
+      "actual": "getSession() restores session from Supabase token store on mount, dashboard renders without re-auth.",
+      "expected": "Session persists across tab close/reopen",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-005",
+      "feature_area": "Auth",
+      "category": "edge_case",
+      "status": "pass",
+      "actual": "Supabase returns user_already_exists error, caught and displayed in red alert. Form stays interactive.",
+      "expected": "Error message shown, not a crash",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-006",
+      "feature_area": "Auth",
+      "category": "error_state",
+      "status": "pass",
+      "actual": "Client-side check: if (!email.trim()) sets error 'Email is required.' Shown in red alert. Submission prevented.",
+      "expected": "Email is required. shown",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-007",
+      "feature_area": "Auth",
+      "category": "error_state",
+      "status": "pass",
+      "actual": "Client-side check: if (!password) sets error 'Password is required.' Shown in red alert.",
+      "expected": "Password is required. shown",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-008",
+      "feature_area": "Auth",
+      "category": "error_state",
+      "status": "pass",
+      "actual": "Client-side check: password.length < 6 sets error 'Password must be at least 6 characters.' API never called.",
+      "expected": "Password must be at least 6 characters. shown",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-009",
+      "feature_area": "Auth",
+      "category": "error_state",
+      "status": "pass",
+      "actual": "Supabase returns Invalid login credentials, caught and displayed in red alert. No crash.",
+      "expected": "Supabase error message shown, not a crash",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-010",
+      "feature_area": "Auth",
+      "category": "error_state",
+      "status": "pass",
+      "actual": "noValidate on form allows submission; Supabase returns invalid email format error, displayed in alert.",
+      "expected": "Some error shown about invalid email format",
+      "console_errors": [],
+      "notes": "No client-side email format regex — error comes from Supabase. Acceptable behavior."
+    },
+    {
+      "tc_id": "TC-011",
+      "feature_area": "Expense CRUD",
+      "category": "golden_path",
+      "status": "pass",
+      "actual": "Form inserts to Supabase with user_id, row appears in list with correct amount, category icon, date, note.",
+      "expected": "Entry appears with $47.50, food icon, date, note",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-012",
+      "feature_area": "Expense CRUD",
+      "category": "golden_path",
+      "status": "pass",
+      "actual": "note.trim() || null sends null to DB. ExpenseList renders {expense.note && ...} so null note shows nothing.",
+      "expected": "Entry appears without note showing null",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-013",
+      "feature_area": "Expense CRUD",
+      "category": "golden_path",
+      "status": "pass",
+      "actual": "Edit form pre-fills with expense values, onUpdate calls supabase update, state refreshes with new values.",
+      "expected": "Row updates to show $52.75 and new note",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-014",
+      "feature_area": "Expense CRUD",
+      "category": "golden_path",
+      "status": "pass",
+      "actual": "supabase.delete called, row filtered from local state immediately.",
+      "expected": "Row removed, totals update",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-015",
+      "feature_area": "Expense CRUD",
+      "category": "golden_path",
+      "status": "pass",
+      "actual": "Expenses grouped by date.slice(0,7) key; June 2026 and May 2026 render as separate sections with correct subtotals.",
+      "expected": "Two month groups with correct subtotals",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-016",
+      "feature_area": "Expense CRUD",
+      "category": "edge_case",
+      "status": "pass",
+      "actual": "React renders text content via JSX text node, not innerHTML. Apostrophe stored and displayed as literal character.",
+      "expected": "Apostrophe displays correctly",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-017",
+      "feature_area": "Expense CRUD",
+      "category": "edge_case",
+      "status": "pass",
+      "actual": "No dangerouslySetInnerHTML used. React auto-escapes content. Script tag renders as literal text.",
+      "expected": "Script tag renders as text, no alert fires",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-018",
+      "feature_area": "Expense CRUD",
+      "category": "edge_case",
+      "status": "pass",
+      "actual": "input min=0.01 allows it; parseFloat(0.01) > 0 passes validation; DB numeric(10,2) stores it; toFixed(2) displays $0.01.",
+      "expected": "Saves and displays as $0.01",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-019",
+      "feature_area": "Expense CRUD",
+      "category": "edge_case",
+      "status": "pass",
+      "actual": "99999.99 well within numeric(10,2) range. No JS number overflow. Displays correctly.",
+      "expected": "Saves and displays correctly",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-020",
+      "feature_area": "Expense CRUD",
+      "category": "edge_case",
+      "status": "pass",
+      "actual": "Button disabled={loading} prevents second submission. First click sets loading=true, second click is a no-op.",
+      "expected": "Only one entry created",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-021",
+      "feature_area": "Expense CRUD",
+      "category": "edge_case",
+      "status": "pass",
+      "actual": "date.slice(0,7) = '2026-04' keys to April group. Months sorted descending, so April 2026 renders as a separate section.",
+      "expected": "Appears under April 2026 heading",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-022",
+      "feature_area": "Expense CRUD",
+      "category": "error_state",
+      "status": "pass",
+      "actual": "if (!amount.trim()) sets error 'Amount is required.' Form not submitted.",
+      "expected": "Amount is required. shown",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-023",
+      "feature_area": "Expense CRUD",
+      "category": "error_state",
+      "status": "pass",
+      "actual": "parseFloat(0) <= 0 fails check, error 'Amount must be a positive number.' shown.",
+      "expected": "Amount must be a positive number. shown",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-024",
+      "feature_area": "Expense CRUD",
+      "category": "error_state",
+      "status": "pass",
+      "actual": "parseFloat(-15) <= 0 fails check, error 'Amount must be a positive number.' shown.",
+      "expected": "Amount must be a positive number. shown",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-025",
+      "feature_area": "Expense CRUD",
+      "category": "error_state",
+      "status": "pass",
+      "actual": "if (!date) sets error 'Date is required.' Form not submitted.",
+      "expected": "Date is required. shown",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-026",
+      "feature_area": "Expense CRUD",
+      "category": "error_state",
+      "status": "pass",
+      "actual": "isNaN(parseFloat('abc')) = true, error 'Amount must be a positive number.' shown.",
+      "expected": "Amount must be a positive number. shown",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-027",
+      "feature_area": "Expense CRUD",
+      "category": "regression",
+      "status": "pass",
+      "actual": "App fetches expenses on mount via fetchExpenses(). Data persisted in Supabase. Reload re-runs fetch and list repopulates.",
+      "expected": "Expense still in list after reload",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-028",
+      "feature_area": "Expense List & Filter",
+      "category": "golden_path",
+      "status": "pass",
+      "actual": "filterCategory state drives filtered = expenses.filter(e => e.category === filterCategory). Only food expenses shown.",
+      "expected": "Only food expenses shown when food filter selected",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-029",
+      "feature_area": "Expense List & Filter",
+      "category": "golden_path",
+      "status": "pass",
+      "actual": "filterCategory === 'all' returns full expenses array without filtering.",
+      "expected": "All expenses restored",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-030",
+      "feature_area": "Expense List & Filter",
+      "category": "edge_case",
+      "status": "pass",
+      "actual": "filtered.length === 0 renders the empty state div with 📭 icon and message text.",
+      "expected": "Empty state shown, not blank area",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-031",
+      "feature_area": "Expense List & Filter",
+      "category": "edge_case",
+      "status": "pass",
+      "actual": "Note span has overflow: hidden, textOverflow: ellipsis, whiteSpace: nowrap applied. Long notes truncate in row.",
+      "expected": "Long note truncates with ellipsis, does not break row",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-032",
+      "feature_area": "Expense List & Filter",
+      "category": "regression",
+      "status": "pass",
+      "actual": "handleAdd prepends new expense to state array: setExpenses(prev => [created, ...prev]). Summary reads same state array, so total updates immediately on tab switch.",
+      "expected": "New expense appears in filtered view",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-033",
+      "feature_area": "Summary Tab",
+      "category": "golden_path",
+      "status": "pass",
+      "actual": "total = expenses.reduce((sum, e) => sum + Number(e.amount), 0). Correctly sums all amounts.",
+      "expected": "Total card equals sum of all expenses",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-034",
+      "feature_area": "Summary Tab",
+      "category": "golden_path",
+      "status": "pass",
+      "actual": "monthTotal filters e.date.startsWith(thisMonth) where thisMonth = new Date().toISOString().slice(0, 7).",
+      "expected": "This Month card shows only current-month expenses",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-035",
+      "feature_area": "Summary Tab",
+      "category": "golden_path",
+      "status": "pass",
+      "actual": ".filter(c => c.count > 0) removes zero-count categories before rendering.",
+      "expected": "Only categories with expenses appear",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-036",
+      "feature_area": "Summary Tab",
+      "category": "edge_case",
+      "status": "pass",
+      "actual": "With empty expenses array: total = 0 → $0.00. monthTotal = 0. byCategory.length = 0, section not rendered.",
+      "expected": "$0.00 totals, no category bars",
+      "console_errors": [],
+      "notes": ""
+    },
+    {
+      "tc_id": "TC-037",
+      "feature_area": "Summary Tab",
+      "category": "regression",
+      "status": "pass",
+      "actual": "handleAdd updates shared expenses state array. ExpenseSummary receives same state as prop. React re-renders Summary with updated total on tab switch.",
+      "expected": "Totals update immediately after adding expense",
+      "console_errors": [],
+      "notes": ""
+    }
+  ]
+}

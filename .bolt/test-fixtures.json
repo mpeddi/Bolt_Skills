@@ -1,0 +1,366 @@
+{
+  "generated": "2026-06-24T00:00:00Z",
+  "fixtures": [
+    {
+      "tc_id": "TC-001",
+      "label": "Sign up with valid email and strong password",
+      "category": "golden_path",
+      "feature_area": "Auth",
+      "input": { "email": "priya.mehta@domain-example.com", "password": "Sunrise#2026" }
+    },
+    {
+      "tc_id": "TC-002",
+      "label": "Sign in with existing credentials",
+      "category": "golden_path",
+      "feature_area": "Auth",
+      "input": { "email": "priya.mehta@domain-example.com", "password": "Sunrise#2026" },
+      "setup": "Account created via TC-001 must exist"
+    },
+    {
+      "tc_id": "TC-003",
+      "label": "Sign out via header button",
+      "category": "golden_path",
+      "feature_area": "Auth",
+      "input": {},
+      "setup": "Must be signed in as priya.mehta@domain-example.com"
+    },
+    {
+      "tc_id": "TC-004",
+      "label": "Session persists across tab close and reopen",
+      "category": "edge_case",
+      "feature_area": "Auth",
+      "input": {},
+      "setup": "Sign in as priya.mehta@domain-example.com, then close and reopen the tab"
+    },
+    {
+      "tc_id": "TC-005",
+      "label": "Sign up with already-registered email",
+      "category": "edge_case",
+      "feature_area": "Auth",
+      "input": { "email": "priya.mehta@domain-example.com", "password": "Sunrise#2026" },
+      "setup": "Account already registered via TC-001",
+      "expected_error": "User already registered"
+    },
+    {
+      "tc_id": "TC-006",
+      "label": "Submit sign-in with empty email field",
+      "category": "error_state",
+      "feature_area": "Auth",
+      "input": { "email": "", "password": "Sunrise#2026" },
+      "expected_error": "Email is required."
+    },
+    {
+      "tc_id": "TC-007",
+      "label": "Submit sign-in with empty password field",
+      "category": "error_state",
+      "feature_area": "Auth",
+      "input": { "email": "priya.mehta@domain-example.com", "password": "" },
+      "expected_error": "Password is required."
+    },
+    {
+      "tc_id": "TC-008",
+      "label": "Sign up with password shorter than 6 characters",
+      "category": "error_state",
+      "feature_area": "Auth",
+      "input": { "email": "new.user@domain-example.com", "password": "Ab1!" },
+      "expected_error": "Password must be at least 6 characters."
+    },
+    {
+      "tc_id": "TC-009",
+      "label": "Sign in with correct email but wrong password",
+      "category": "error_state",
+      "feature_area": "Auth",
+      "input": { "email": "priya.mehta@domain-example.com", "password": "WrongPass99!" },
+      "setup": "Account for priya.mehta@domain-example.com must exist",
+      "expected_error": "Invalid login credentials"
+    },
+    {
+      "tc_id": "TC-010",
+      "label": "Submit sign-in with non-email value in email field",
+      "category": "error_state",
+      "feature_area": "Auth",
+      "input": { "email": "notanemail", "password": "Sunrise#2026" },
+      "expected_error": "Unable to validate email address: invalid format"
+    },
+    {
+      "tc_id": "TC-011",
+      "label": "Add expense with all fields filled",
+      "category": "golden_path",
+      "feature_area": "Expense CRUD",
+      "input": {
+        "amount": "47.50",
+        "category": "food",
+        "date": "2026-06-24",
+        "note": "Team lunch at Tartine Manufactory"
+      },
+      "setup": "Signed in as priya.mehta@domain-example.com"
+    },
+    {
+      "tc_id": "TC-012",
+      "label": "Add expense with note field left empty",
+      "category": "golden_path",
+      "feature_area": "Expense CRUD",
+      "input": {
+        "amount": "28.00",
+        "category": "transport",
+        "date": "2026-06-23",
+        "note": ""
+      },
+      "setup": "Signed in"
+    },
+    {
+      "tc_id": "TC-013",
+      "label": "Edit an existing expense — change amount and note",
+      "category": "golden_path",
+      "feature_area": "Expense CRUD",
+      "input": {
+        "amount": "52.75",
+        "category": "food",
+        "date": "2026-06-24",
+        "note": "Team lunch at Tartine — corrected amount"
+      },
+      "setup": "TC-011 expense must exist; click its edit button"
+    },
+    {
+      "tc_id": "TC-014",
+      "label": "Delete an expense",
+      "category": "golden_path",
+      "feature_area": "Expense CRUD",
+      "input": {},
+      "setup": "TC-012 expense must exist; click its delete button"
+    },
+    {
+      "tc_id": "TC-015",
+      "label": "Add 3 expenses across 2 different months",
+      "category": "golden_path",
+      "feature_area": "Expense CRUD",
+      "input": [
+        { "amount": "120.00", "category": "housing", "date": "2026-06-15", "note": "Electricity bill" },
+        { "amount": "18.50",  "category": "food",    "date": "2026-05-28", "note": "Groceries" },
+        { "amount": "9.99",   "category": "entertainment", "date": "2026-05-10", "note": "Spotify subscription" }
+      ],
+      "setup": "Signed in"
+    },
+    {
+      "tc_id": "TC-016",
+      "label": "Add expense with apostrophe in note",
+      "category": "edge_case",
+      "feature_area": "Expense CRUD",
+      "input": {
+        "amount": "14.75",
+        "category": "food",
+        "date": "2026-06-20",
+        "note": "O'Brien's Corner Cafe — flat white"
+      },
+      "setup": "Signed in"
+    },
+    {
+      "tc_id": "TC-017",
+      "label": "Add expense with XSS payload in note",
+      "category": "edge_case",
+      "feature_area": "Expense CRUD",
+      "input": {
+        "amount": "5.00",
+        "category": "other",
+        "date": "2026-06-22",
+        "note": "<script>alert('xss')</script>"
+      },
+      "setup": "Signed in"
+    },
+    {
+      "tc_id": "TC-018",
+      "label": "Add expense with minimum valid amount (0.01)",
+      "category": "edge_case",
+      "feature_area": "Expense CRUD",
+      "input": {
+        "amount": "0.01",
+        "category": "other",
+        "date": "2026-06-24",
+        "note": "Penny test"
+      },
+      "setup": "Signed in"
+    },
+    {
+      "tc_id": "TC-019",
+      "label": "Add expense with large amount (99999.99)",
+      "category": "edge_case",
+      "feature_area": "Expense CRUD",
+      "input": {
+        "amount": "99999.99",
+        "category": "housing",
+        "date": "2026-06-01",
+        "note": "Annual rent payment"
+      },
+      "setup": "Signed in"
+    },
+    {
+      "tc_id": "TC-020",
+      "label": "Submit Add Expense form twice rapidly",
+      "category": "edge_case",
+      "feature_area": "Expense CRUD",
+      "input": {
+        "amount": "33.00",
+        "category": "shopping",
+        "date": "2026-06-24",
+        "note": "Double-submit test"
+      },
+      "setup": "Signed in; fill form and click submit twice within 500ms"
+    },
+    {
+      "tc_id": "TC-021",
+      "label": "Add expense with a date from a prior month",
+      "category": "edge_case",
+      "feature_area": "Expense CRUD",
+      "input": {
+        "amount": "62.40",
+        "category": "health",
+        "date": "2026-04-03",
+        "note": "Dentist co-pay"
+      },
+      "setup": "Signed in"
+    },
+    {
+      "tc_id": "TC-022",
+      "label": "Submit expense form with amount field empty",
+      "category": "error_state",
+      "feature_area": "Expense CRUD",
+      "input": { "amount": "", "category": "food", "date": "2026-06-24", "note": "" },
+      "expected_error": "Amount is required."
+    },
+    {
+      "tc_id": "TC-023",
+      "label": "Submit expense form with amount = 0",
+      "category": "error_state",
+      "feature_area": "Expense CRUD",
+      "input": { "amount": "0", "category": "food", "date": "2026-06-24", "note": "" },
+      "expected_error": "Amount must be a positive number."
+    },
+    {
+      "tc_id": "TC-024",
+      "label": "Submit expense form with negative amount",
+      "category": "error_state",
+      "feature_area": "Expense CRUD",
+      "input": { "amount": "-15.00", "category": "food", "date": "2026-06-24", "note": "" },
+      "expected_error": "Amount must be a positive number."
+    },
+    {
+      "tc_id": "TC-025",
+      "label": "Submit expense form with date field cleared",
+      "category": "error_state",
+      "feature_area": "Expense CRUD",
+      "input": { "amount": "25.00", "category": "food", "date": "", "note": "" },
+      "expected_error": "Date is required."
+    },
+    {
+      "tc_id": "TC-026",
+      "label": "Type letters into the amount field",
+      "category": "error_state",
+      "feature_area": "Expense CRUD",
+      "input": { "amount": "abc", "category": "food", "date": "2026-06-24", "note": "" },
+      "expected_error": "Amount must be a positive number."
+    },
+    {
+      "tc_id": "TC-027",
+      "label": "After adding expense, reload page — expense persists",
+      "category": "regression",
+      "feature_area": "Expense CRUD",
+      "input": {
+        "amount": "19.99",
+        "category": "entertainment",
+        "date": "2026-06-24",
+        "note": "Movie ticket"
+      },
+      "setup": "Add expense, then hard-reload the page (Ctrl+Shift+R)"
+    },
+    {
+      "tc_id": "TC-028",
+      "label": "Filter by a specific category — only matching expenses shown",
+      "category": "golden_path",
+      "feature_area": "Expense List & Filter",
+      "input": { "filter": "food" },
+      "setup": "At least 2 food expenses and 1 non-food expense must exist in the list"
+    },
+    {
+      "tc_id": "TC-029",
+      "label": "Switch filter back to All categories — all expenses restored",
+      "category": "golden_path",
+      "feature_area": "Expense List & Filter",
+      "input": { "filter": "all" },
+      "setup": "Filter currently set to 'food' from TC-028"
+    },
+    {
+      "tc_id": "TC-030",
+      "label": "Filter by category with no matching expenses — empty state shown",
+      "category": "edge_case",
+      "feature_area": "Expense List & Filter",
+      "input": { "filter": "health" },
+      "setup": "No health expenses in list (use a fresh account or delete any health expenses)"
+    },
+    {
+      "tc_id": "TC-031",
+      "label": "Expense with very long note — truncates without breaking layout",
+      "category": "edge_case",
+      "feature_area": "Expense List & Filter",
+      "input": {
+        "amount": "8.50",
+        "category": "food",
+        "date": "2026-06-24",
+        "note": "This is a remarkably long note designed to test text overflow behavior in the expense list row. It contains enough characters to comfortably exceed the visible width of the note field in any standard viewport size from mobile to desktop and should be truncated with an ellipsis rather than wrapping or overflowing its container. Additional padding text follows here to ensure sufficient length for the test."
+      },
+      "setup": "Add this expense and observe the row in the list"
+    },
+    {
+      "tc_id": "TC-032",
+      "label": "After adding expense while on Expenses tab, switch to Summary — totals updated",
+      "category": "regression",
+      "feature_area": "Expense List & Filter",
+      "input": {
+        "amount": "44.00",
+        "category": "shopping",
+        "date": "2026-06-24",
+        "note": "Regression check — add then check summary"
+      },
+      "setup": "Add this expense on the Expenses tab, then click the Summary tab"
+    },
+    {
+      "tc_id": "TC-033",
+      "label": "Switch to Summary tab — Total card equals sum of all expenses",
+      "category": "golden_path",
+      "feature_area": "Summary Tab",
+      "input": {},
+      "setup": "At least 3 expenses of known amounts must exist; calculate expected total manually"
+    },
+    {
+      "tc_id": "TC-034",
+      "label": "This Month card shows only current-month expenses",
+      "category": "golden_path",
+      "feature_area": "Summary Tab",
+      "input": {},
+      "setup": "Must have at least 1 expense dated in June 2026 and 1 dated in a prior month"
+    },
+    {
+      "tc_id": "TC-035",
+      "label": "Category breakdown lists only categories with at least one expense",
+      "category": "golden_path",
+      "feature_area": "Summary Tab",
+      "input": {},
+      "setup": "Expenses from exactly 3 categories should exist"
+    },
+    {
+      "tc_id": "TC-036",
+      "label": "View Summary with no expenses — shows $0.00, no category bars",
+      "category": "edge_case",
+      "feature_area": "Summary Tab",
+      "input": {},
+      "setup": "Sign in to an account with zero expenses (use a freshly created account)"
+    },
+    {
+      "tc_id": "TC-037",
+      "label": "Add expense while on Summary tab — totals update immediately",
+      "category": "regression",
+      "feature_area": "Summary Tab",
+      "input": {},
+      "setup": "Navigate to Summary tab, then switch to Expenses tab, add an expense, switch back — verify total updated"
+    }
+  ]
+}
