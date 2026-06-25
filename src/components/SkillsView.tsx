@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import { skills } from '../data/skills'
+import { useEffect, useState } from 'react'
+import { supabase } from '../lib/supabase'
+import type { BoltSkill } from '../lib/supabase'
 
 function renderMarkdown(text: string): React.ReactNode[] {
   const lines = text.split('\n')
@@ -78,8 +79,44 @@ function renderInline(text: string): React.ReactNode {
 }
 
 export default function SkillsView() {
-  const [selected, setSelected] = useState(skills[0].slug)
-  const skill = skills.find(s => s.slug === selected)!
+  const [skills, setSkills] = useState<BoltSkill[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [selected, setSelected] = useState<string | null>(null)
+
+  useEffect(() => {
+    supabase
+      .from('bolt_skills')
+      .select('*')
+      .order('created_at', { ascending: true })
+      .then(({ data, error }) => {
+        if (error) {
+          setError('Failed to load skills.')
+        } else {
+          setSkills(data as BoltSkill[])
+          if (data.length > 0) setSelected(data[0].slug)
+        }
+        setLoading(false)
+      })
+  }, [])
+
+  if (loading) {
+    return (
+      <div style={{ border: '1px solid var(--border)', borderRadius: 10, minHeight: 480, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--surface)' }}>
+        <span style={{ fontSize: 13, color: 'var(--text-muted)' }}>Loading skills…</span>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div style={{ border: '1px solid var(--border)', borderRadius: 10, minHeight: 480, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--surface)' }}>
+        <span style={{ fontSize: 13, color: 'var(--danger)' }}>{error}</span>
+      </div>
+    )
+  }
+
+  const skill = skills.find(s => s.slug === selected) ?? null
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: 0, border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden', background: 'var(--surface)', minHeight: 480 }}>
@@ -114,11 +151,15 @@ export default function SkillsView() {
 
       {/* Content */}
       <div style={{ padding: '20px 24px', overflowY: 'auto', maxHeight: 560 }}>
-        <div style={{ marginBottom: 14, paddingBottom: 12, borderBottom: '1px solid var(--border)' }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{skill.name}</h2>
-          <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>{skill.description}</p>
-        </div>
-        <div>{renderMarkdown(skill.content)}</div>
+        {skill && (
+          <>
+            <div style={{ marginBottom: 14, paddingBottom: 12, borderBottom: '1px solid var(--border)' }}>
+              <h2 style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>{skill.name}</h2>
+              <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>{skill.description}</p>
+            </div>
+            <div>{renderMarkdown(skill.content)}</div>
+          </>
+        )}
       </div>
     </div>
   )

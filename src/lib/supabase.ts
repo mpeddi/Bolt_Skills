@@ -5,6 +5,16 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
+export interface BoltSkill {
+  id: string
+  slug: string
+  name: string
+  description: string
+  content: string
+  created_at: string
+  updated_at: string
+}
+
 export type Category = 'food' | 'transport' | 'housing' | 'health' | 'entertainment' | 'shopping' | 'other'
 
 export interface Expense {
